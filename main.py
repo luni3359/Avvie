@@ -580,9 +580,6 @@ class Picture:
             notify.show()
 
 
-picture = Picture()
-
-
 class SettingsDialog(Gtk.Dialog):
 
     def toggle_menu_setting_export(self, button, name):
@@ -651,7 +648,7 @@ class SettingsDialog(Gtk.Dialog):
 
 
 class Window(Gtk.Window):
-    def __init__(self):
+    def __init__(self, app_title):
         Gtk.Window.__init__(self, title=app_title)
 
         GLib.set_application_name(app_title)
@@ -1301,7 +1298,7 @@ class Window(Gtk.Window):
         w, h = self.get_size()
         right = w - 16
         bottom = h - 16
-        for i, size in enumerate(picture.thumbs):
+        for size in picture.thumbs:
 
             if right - size < event.x < right and bottom - size < event.y < bottom:
                 if event.button == 1:
@@ -1714,8 +1711,8 @@ class Window(Gtk.Window):
 
                     right -= size + 16
 
-
-win = Window()
+picture = Picture()
+win = Window(app_title=app_title)
 win.connect("destroy", Gtk.main_quit)
 win.show_all()
 Gtk.main()
