@@ -26,7 +26,7 @@ import urllib.parse
 import subprocess
 import piexif
 import json
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, UnidentifiedImageError
 
 gi.require_version("Gtk", "3.0")
 gi.require_foreign("cairo")
@@ -430,10 +430,16 @@ class Picture:
 
     def load(self, path, bounds):
 
+        try:
+            image = Image.open(path)
+        except UnidentifiedImageError as e:
+            print(e)
+            return
+
         self.loaded_fullpath = path
         self.file_name = os.path.splitext(os.path.basename(path))[0]
         self.bounds = bounds
-        self.source_image = Image.open(path)
+        self.source_image = image
 
         self.exif = None
         info = self.source_image.info
