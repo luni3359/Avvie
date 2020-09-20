@@ -336,7 +336,6 @@ class Picture:
                 cr.putalpha(int(1 * 256.0))
 
             cr = self.apply_filters(cr)
-
             by = cr.tobytes("raw", "BGRa")
             arr = bytearray(by)
             self.thumb_surfaces[size] = cairo.ImageSurface.create_for_data(
@@ -1262,6 +1261,7 @@ class Window(Gtk.Window):
         f.set_name("Image files")
         f.add_mime_type("image/jpeg")
         f.add_mime_type("image/png")
+        f.add_mime_type("image/gif")
         dialog.add_filter(f)
 
 
